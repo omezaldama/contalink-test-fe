@@ -7,7 +7,8 @@ const httpClient = new HttpService();
 function App() {
   const [fromDate, setFromDate] = useState<string>('');
   const [toDate, setToDate] = useState<string>('');
-  const [submittedDates, setSubmittedDates] = useState<string[]>(['', '']);
+  const [submittedFromDate, setSubmittedFromDate] = useState<string>('');
+  const [submittedToDate, setSubmittedToDate] = useState<string>('');
   const [invoices, setInvoices] = useState<Invoice[]>([]);
 
   const updateInvoicesAndDates = async () => {
@@ -15,7 +16,8 @@ function App() {
       `invoices?from_date=${fromDate}&to_date=${toDate}`
     );
     setInvoices(response.invoices);
-    setSubmittedDates([fromDate, toDate]);
+    setSubmittedFromDate(fromDate);
+    setSubmittedToDate(toDate);
   };
 
   return (
@@ -47,8 +49,8 @@ function App() {
       </div>
       <div>
         {
-          (Boolean(submittedDates[0].length) && Boolean(submittedDates[1].length)) ? <div>
-            <h3>Showing invoices from {submittedDates[0]} upto {submittedDates[1]}</h3>
+          (Boolean(submittedFromDate.length) && Boolean(submittedToDate.length)) ? <div>
+            <h3>Showing invoices from {submittedFromDate} upto {submittedToDate}</h3>
             <table className="invoices-table">
               <tr>
                 <th>Invoice number</th>
